@@ -3,17 +3,18 @@ import { useState } from 'react'
 import { AUTHOR } from '../../constants'
 // import { Button } from '../ui/Button'
 import IButton from '@mui/material/Button'
+import { useDispatch } from 'react-redux'
+import { addMessage } from '../../store/messages/actions'
+import { useParams } from 'react-router-dom'
 
-export function Form({ addMessage }) {
+export function Form() {
     const [text, setText] = useState('')
+    const dispatch = useDispatch()
+    const { chatId } = useParams()
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        // console.log('input', text)
-        addMessage({
-            author: AUTHOR.user,
-            text
-        })
+        dispatch(addMessage(chatId, text))
 
         setText('')
     }
@@ -27,7 +28,6 @@ export function Form({ addMessage }) {
                     value={text}
                     onChange={(event) => setText(event.target.value)}
                 />
-                {/* <Button type="submit">Add message</Button> */}
                 <IButton
                     variant='contained'
                     color='success'

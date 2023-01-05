@@ -28,26 +28,6 @@ export function App() {
   const [messages, setMessages] = useState(defaultMessages)
   const [theme, setTheme] = useState(defaultContext.theme)
 
-  const chats = Object.keys(messages).map((chat) => ({
-    id: nanoid(),
-    name: chat
-  }))
-
-  const onAddChat = (newChat) => {
-    console.log('newChat', newChat)
-    setMessages({
-      ...messages,
-      [newChat.name]: []
-    })
-  }
-
-  const onAddMessage = (chatId, newMessage) => {
-    setMessages({
-      ...messages,
-      [chatId]: [...messages[chatId], newMessage]
-    })
-  }
-
   const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light')
   }
@@ -65,8 +45,11 @@ export function App() {
               <Route index element={<MainPage />} />
               <Route path='/profile' element={<ProfilePage />} />
               <Route path='chats'>
-                <Route index element={<ChatList chats={chats} onAddChat={onAddChat} />} />
-                <Route path=':chatId' element={<ChatsPage chats={chats} messages={messages} onAddMessage={onAddMessage} onAddChat={onAddChat} />} />
+                <Route index element={<ChatList />} />
+                <Route 
+                  path=':chatId' 
+                  element={<ChatsPage />} 
+                />
               </Route>
             </Route>
 
